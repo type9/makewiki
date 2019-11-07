@@ -28,4 +28,5 @@ urlpatterns = [
 
     # Wiki App
     # path('REPLACE_ME_WITH_ROUTE', include(REPLACE_ME_WITH_APP_URLS)),
+    path('', include('wiki.urls'))
 ]

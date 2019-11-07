@@ -1,8 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, loader
 from wiki.models import Page
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-
 
 class PageList(ListView):
     """
@@ -11,11 +10,18 @@ class PageList(ListView):
       2. Replace this CHALLENGE text with a descriptive docstring for PageList.
       3. Replace pass below with the code to render a template named `list.html`.
     """
+    """
+      This class extends ListView to render an index of pages using Page objects
+    """
     model = Page
 
     def get(self, request):
         """ Returns a list of wiki pages. """
-        pass
+        page_list = Page.objects.all()
+        context = {
+          'page_list': page_list,
+        }
+        return render(request, 'list.html', context)
 
 
 class PageDetailView(DetailView):
@@ -35,11 +41,18 @@ class PageDetailView(DetailView):
       5. After successfully editing a Page, use Django Messages to "flash" the user a success message
            - Message Content: REPLACE_WITH_PAGE_TITLE has been successfully updated.
     """
+    """
+    This view renders a detailed view of the article based off of url slug
+    """
     model = Page
 
     def get(self, request, slug):
         """ Returns a specific of wiki page by slug. """
-        pass
+        page_object = Page.objects.get(slug=slug)
+        context = {
+          'page': page_object,
+        }
+        return render(request, 'page.html', context)
 
     def post(self, request, slug):
         pass
